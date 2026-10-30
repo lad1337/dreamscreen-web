@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- Install: copy to /boot/config/plugins/dockerMan/templates-user/my-dreamscreen-web.xml -->
+<Container version="2">
+  <Name>dreamscreen-web</Name>
+  <Repository>dreamscreen-web</Repository>
+  <Network>host</Network>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Overview>DreamScreen web control and HomeKit bridge. Image is built locally from /mnt/user/Apps/workspace/dreamscreen-web. Host network is required (device replies on UDP 8888, HomeKit uses mDNS). The HomeKit pairing code is printed in the container log.</Overview>
+  <Category>HomeAutomation:</Category>
+  <WebUI>http://[IP]:8099/</WebUI>
+  <ExtraParams>--user 99:100 --restart unless-stopped</ExtraParams>
+  <Config Name="Persistence" Target="/app/persist" Default="/mnt/user/Apps/dreamscreen-web" Mode="rw" Description="HomeKit pairing data" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/Apps/dreamscreen-web</Config>
+  <Config Name="Web port" Target="PORT" Default="8099" Mode="" Description="Web UI port on the host" Type="Variable" Display="always" Required="true" Mask="false">8099</Config>
+  <Config Name="DreamScreen IP" Target="DS_HOST" Default="192.168.1.88" Mode="" Description="IP address of the DreamScreen" Type="Variable" Display="always" Required="true" Mask="false">192.168.1.88</Config>
+  <Config Name="HomeKit functions" Target="HOMEKIT" Default="power,hdr" Mode="" Description="Comma separated: power,inputs,ambient,modes,scenes,hdr. Empty disables HomeKit." Type="Variable" Display="always" Required="false" Mask="false">power,hdr</Config>
+  <Config Name="Retries" Target="RETRIES" Default="2" Mode="" Description="Extra attempts when the DreamScreen does not answer a state query (1.5s each)" Type="Variable" Display="always" Required="true" Mask="false">2</Config>
+</Container>
